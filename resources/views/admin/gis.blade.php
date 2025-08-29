@@ -156,7 +156,7 @@
     let dataJson = <?php echo json_encode($data); ?>;
 let kmlLayers = {};
 
-var map = L.map('map').setView([-3.2956964353281704, 114.58920471974757], 12);
+var map = L.map('map').setView([-3.3006418708587857, 114.5891828445538], 12);
 
 L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
     maxZoom: 19,
@@ -173,8 +173,8 @@ var puIcon = L.icon({
     // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
-var markerPUPR = L.marker([-3.2956964353281704, 114.58920471974757], {icon: puIcon}).addTo(map);
-markerPUPR.bindPopup("PUPR Banjarmasin").openPopup();
+var markerPUPR = L.marker([-3.3006418708587857, 114.5891828445538], {icon: puIcon}).addTo(map);
+markerPUPR.bindPopup("Balai Besar Pelaksanaan Jalan Nasional").openPopup();
 
 var garisLayer = L.layerGroup().addTo(map);
 var markerLayer = L.layerGroup().addTo(map);
@@ -236,7 +236,7 @@ function loadKML(data){
         var div = L.DomUtil.create("div", "info legend");
         div.innerHTML = `
         <h3>Legenda</h3>
-        <img src="/img/Banjarmasin_Logo.png" height=24> PUPR Banjarmasin<br>
+        <img src="/img/Banjarmasin_Logo.png" height=24>Balai Besar Pelaksanaan Jalan Nasional<br>
         <i style="background: red; width: 15px; height: 5px; display:inline-block; "></i> Garis Jalur<br>
         <img src="/js/leaflet/dist/images/marker-icon.png" height=24> Titik Tiang<br>
     `;
