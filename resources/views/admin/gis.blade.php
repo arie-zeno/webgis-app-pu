@@ -166,7 +166,7 @@ L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
 var puIcon = L.icon({
     iconUrl: '/img/Banjarmasin_Logo.png',
 
-    iconSize:     [32, 48.043478261 ], // size of the icon
+    iconSize:     [32, 32 ], // size of the icon
     // shadowSize:   [50, 64], // size of the shadow
     iconAnchor:   [15, 2], // point of the icon which will correspond to marker's location
     // shadowAnchor: [4, 62],  // the same for the shadow
@@ -236,7 +236,7 @@ function loadKML(data){
         var div = L.DomUtil.create("div", "info legend");
         div.innerHTML = `
         <h3>Legenda</h3>
-        <img src="/img/Banjarmasin_Logo.png" height=24>Balai Besar Pelaksanaan Jalan Nasional<br>
+        <img src="/img/Banjarmasin_Logo.png" height=24> Balai Besar Pelaksanaan Jalan Nasional<br>
         <i style="background: red; width: 15px; height: 5px; display:inline-block; "></i> Garis Jalur<br>
         <img src="/js/leaflet/dist/images/marker-icon.png" height=24> Titik Tiang<br>
     `;
