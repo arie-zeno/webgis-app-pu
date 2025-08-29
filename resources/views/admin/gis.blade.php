@@ -41,7 +41,7 @@
 @section('content')
 {{-- @dd($data); --}}
 {{-- loading --}}
-<div id="loading" class="position-fixed top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center" style="background-color: #0000007c; backdrop-filter: blur(2px); z-index: 9999;">
+<div id="loading" class="position-fixed top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center" style="background-color: #ffffff7c; backdrop-filter: blur(2px); z-index: 9999;">
     <img src="/img/pu_nobg.png" alt="" width="600">
 </div>
 
