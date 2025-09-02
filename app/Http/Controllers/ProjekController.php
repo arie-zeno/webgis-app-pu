@@ -66,7 +66,7 @@ class ProjekController extends Controller
                 "email_projek" => "required",
                 "tanggal_mulai" => "required",
                 "tanggal_akhir" => "required",                
-                "file_koordinat" => "nullable|file"
+                "file_koordinat" => "nullable|file",
             ]);
 
             if ($request->hasFile('file_koordinat')) {

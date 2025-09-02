@@ -1,7 +1,12 @@
 @extends('admin.layout.header')
 @section('title', 'Tambah Projek')
 @section('content')
-
+    {{-- loading --}}
+    <div id="loading" class="position-fixed top-0 bottom-0 start-0 end-0 d-none align-items-center justify-content-center"
+        style="background-color: #ffffff7c; backdrop-filter: blur(2px); z-index: 99;">
+        <img src="/img/pu_nobg.png" alt="" width="600">
+    </div>
+    {{-- endloading --}}
     <main class="content">
         <div class="container-fluid p-0">
             <div class="d-flex justify-content-between align-items-center">
@@ -45,38 +50,58 @@
                                     <div id="dokumentasi-wrapper">
                                         <div class="dokumentasi-item mb-3">
                                             <label for="dokumentasi-0" class="form-label">Dokumentasi 1</label>
-                                            <input id="dokumentasi-0" type="file" name="gambars[]" class="form-control mb-2"
-                                                onchange="previewImage(this, 0)" required>
+                                            <input id="dokumentasi-0" type="file" name="gambars[]"
+                                                class="form-control mb-2" onchange="previewImage(this, 0)" required>
                                             <div id="preview-0" class="mb-2"></div>
                                             <input type="text" name="caption[]" class="form-control"
                                                 placeholder="Keterangan" required>
                                         </div>
 
-                                        <div class="dokumentasi-item mb-3">
+                                        <div class="dokumentasi-item mb-3 d-none">
                                             <label for="dokumentasi-1" class="form-label">Dokumentasi 2</label>
-                                            <input id="dokumentasi-1" type="file" name="gambars[]" class="form-control mb-2"
-                                                onchange="previewImage(this, 1)">
+                                            <input id="dokumentasi-1" type="file" name="gambars[]"
+                                                class="form-control mb-2" onchange="previewImage(this, 1)">
                                             <div id="preview-1" class="mb-2"></div>
                                             <input type="text" name="caption[]" class="form-control"
-                                                placeholder="Keterangan" >
+                                                placeholder="Keterangan">
                                         </div>
 
-                                        <div class="dokumentasi-item mb-3">
+                                        <div class="dokumentasi-item mb-3 d-none">
                                             <label for="dokumentasi-2" class="form-label">Dokumentasi 3</label>
-                                            <input id="dokumentasi-2" type="file" name="gambars[]" class="form-control mb-2"
-                                                onchange="previewImage(this, 2)">
+                                            <input id="dokumentasi-2" type="file" name="gambars[]"
+                                                class="form-control mb-2" onchange="previewImage(this, 2)">
                                             <div id="preview-2" class="mb-2"></div>
                                             <input type="text" name="caption[]" class="form-control"
-                                                placeholder="Keterangan" >
+                                                placeholder="Keterangan">
                                         </div>
 
+                                        <div class="dokumentasi-item mb-3 d-none">
+                                            <label for="dokumentasi-3" class="form-label">Dokumentasi 4</label>
+                                            <input id="dokumentasi-3" type="file" name="gambars[]"
+                                                class="form-control mb-2" onchange="previewImage(this, 3)">
+                                            <div id="preview-3" class="mb-2"></div>
+                                            <input type="text" name="caption[]" class="form-control"
+                                                placeholder="Keterangan">
+                                        </div>
 
-                                    
+                                        <div class="dokumentasi-item mb-3 d-none">
+                                            <label for="dokumentasi-4" class="form-label">Dokumentasi 5</label>
+                                            <input id="dokumentasi-4" type="file" name="gambars[]"
+                                                class="form-control mb-2" onchange="previewImage(this, 4)">
+                                            <div id="preview-4" class="mb-2"></div>
+                                            <input type="text" name="caption[]" class="form-control"
+                                                placeholder="Keterangan">
+                                        </div>
+
+                                        
+
+
+
                                     </div>
-                                    {{-- <button type="button" class="btn btn-sm btn-outline-secondary w-100"
-                                        onclick="addDokumentasi()">+ Tambah Dokumentasi</button> --}}
+                                    <button type="button" class="btn btn-sm btn-outline-secondary w-100"
+                                        onclick="addDokumentasi()">+ Tambah Dokumentasi</button>
                                     <br><br>
-                                    <button type="submit" class="btn text-white w-100"
+                                    <button id="btn-tambah" type="submit" class="btn text-white w-100"
                                         style="background-color:rgb(48, 48, 114);">Tambah Data</button>
                                     </form>
                                 </div>
@@ -90,22 +115,37 @@
 
     <script>
         let index = 2;
+        let div = [];
+
+        let dokumentasi_item = document.querySelectorAll(".dokumentasi-item");
+        dokumentasi_item.forEach((element, index) => {
+            if (element.classList.contains('d-none')) {
+                // console.log(index);
+                // console.log(element);
+                div.push(element)
+            }
+        });
+        console.log(div);
+
+        
 
         function addDokumentasi() {
-            let wrapper = document.getElementById('dokumentasi-wrapper');
-            let item = document.createElement('div');
-            item.classList.add('dokumentasi-item', 'mb-3');
-            item.innerHTML = `
-            <label for="dokumentasi-${index}" class="form-label">Dokumentasi ${index}</label>
+            div[0].classList.toggle("d-none");
+            div.shift();
+            // let wrapper = document.getElementById('dokumentasi-wrapper');
+        //     let item = document.createElement('div');
+        //     item.classList.add('dokumentasi-item', 'mb-3');
+        //     item.innerHTML = `
+        //     <label for="dokumentasi-${index}" class="form-label">Dokumentasi ${index}</label>
 
-            <input type="file" name="gambars[]" class="form-control mb-2" onchange="previewImage(this, ${index})" required>
+        //     <input type="file" name="gambars[]" class="form-control mb-2" onchange="previewImage(this, ${index})" required>
 
-            <div id="preview-${index}" class="mb-2"></div>
-            <input type="text" name="caption[]" class="form-control" placeholder="Caption..." required>
-            <button type="button" class="btn btn-sm btn-outline-danger rounded mt-2" onclick="this.parentElement.remove()">Hapus</button>
-        `;
-            wrapper.appendChild(item);
-            index++;
+        //     <div id="preview-${index}" class="mb-2"></div>
+        //     <input type="text" name="caption[]" class="form-control" placeholder="Caption..." required>
+        //     <button type="button" class="btn btn-sm btn-outline-danger rounded mt-2" onclick="this.parentElement.remove()">Hapus</button>
+        // `;
+        //     wrapper.appendChild(item);
+        //     index++;
         }
 
         // fungsi untuk preview gambar
@@ -125,6 +165,14 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        btn = document.querySelector('#btn-tambah');
+        loading = document.querySelector('#loading');
+        // console.log(btn)
+        // btn.addEventListener('click', () => {
+        //     loading.classList.add('d-flex');
+        //     loading.classList.remove('d-none');
+        // })
     </script>
 
 @endsection

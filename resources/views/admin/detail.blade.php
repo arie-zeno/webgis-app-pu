@@ -70,14 +70,14 @@
                         <div class="card-body border-start border-warning border-3 rounded">
                             <h1>{{ $data->nama_projek }}</h1>
                             <h6 class="text-secondary">{{ $data->email }}</h6>
-                            <h5 class="fw-lgiht">Berlaku pada tanggal <b>{{ $tanggal }}</b>, akan berakhir pada tanggal
+                            <h5 class="fw-lgiht">Berlaku pada tanggal <b>{{ $tanggal }}</b> sampai
                                 <b>{{ $kadaluwarsaStr }}</b> ({{ $sisaWaktu }}).
                             </h5>
                             <div class="row justify-content-center mt-3">
                                 @forelse ($data->dokumentasi as $dok)
                                     <a href="/storage/{{ $dok->gambar }}" data-toggle="lightbox"
                                         data-caption="{{ $dok->caption }}"
-                                        class="col-3  shadow rounded-4 mx-1 d-flex flex-column bg-light justify-content-center div-image">
+                                        class="col-3  shadow rounded-4 mx-1 my-1 d-flex flex-column bg-light justify-content-center div-image">
                                         <img src="/storage/{{ $dok->gambar }}" class="img-fluid">
                                     </a>
 
@@ -209,5 +209,6 @@
 @endsection
 
 @section('loadJS')
-    <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.5/dist/index.bundle.min.js"></script>
+    // <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.5/dist/index.bundle.min.js"></script>
+     <script src="/bootstrap5/js/lightbox.js"></script>
 @endsection
