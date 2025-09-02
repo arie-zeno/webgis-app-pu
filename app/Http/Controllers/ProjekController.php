@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projek;
+use App\Models\Dokumentasi;
 use Illuminate\Http\Request;
 use SweetAlert2\Laravel\Swal;
 use Illuminate\Support\Carbon;
@@ -51,7 +52,11 @@ class ProjekController extends Controller
         $title = "Projek";
         return view('admin.formTambah', compact('title'));
     }
+
     public function tambahProjek(Request $request){
+        // $data = $request->caption;
+        
+
         try{
             
         // dd($request->file('file_koordinat')->getMimeType());
@@ -83,20 +88,40 @@ class ProjekController extends Controller
             $filePath = null;
             if ($request->hasFile('file_koordinat')) {
                 $file = $request->file('file_koordinat');
-                $filename = uniqid().'.kml';
+                $filename = uniqid() . '_' . $request->nama_projek . '.kml';
                 $filePath = $file->storeAs('uploads_kml', $filename, 'public');
             // otomatis ke storage/app/public/uploads
             }
 
             $tanggal_akhir = Carbon::parse($request->tanggal_mulai)->copy()->addYears(5);
             // return $tanggal_akhir;
-            Projek::create([
+            $projek = Projek::create([
                 'nama_projek' => $request->nama_projek,
                 'email' => $request->email_projek,
                 'tanggal_projek' => $request->tanggal_mulai,
                 'kadaluwarsa_projek' => $request->tanggal_akhir,
                 'file_koordinat' => $filePath,
             ]);
+
+            if ($request->hasFile('gambars')) {
+                foreach ($request->file('gambars') as $index => $file) {
+                    if($file){
+                        $filename = $request->nama_projek . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $path = $file->storeAs('dokumentasi', $filename , 'public');
+    
+                        $projek->dokumentasi()->create([
+                            'gambar' => $path,
+                            'caption' => $request->caption[$index] ?? '',
+                        ]);
+
+                        // Dokumentasi::create([
+                        //     'projek_id' => $request->id,
+                        //     'gambar' => $path,
+                        //     'caption' => $request->caption[$index] ?? '',
+                        // ]);
+                    }
+                }
+            }
 
             Swal::fire([
                 'title' => 'Berhasil',
@@ -121,7 +146,7 @@ class ProjekController extends Controller
     }
 
     public function detailProjek($id){
-         $title = "Projek";
+        $title = "Projek";
         $data = Projek::findOrFail($id);
         return view('admin.detail', compact('data', 'title'));
     }

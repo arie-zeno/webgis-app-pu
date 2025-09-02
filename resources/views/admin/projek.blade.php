@@ -31,7 +31,7 @@ use Illuminate\Support\Carbon;
                 <div class="card flex-fill">
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="card-title mb-0">List Projek</h5>
-                        <a href="{{ route('formTambah.projek') }}" class="btn btn-sm btn-primary my-0">
+                        <a href="{{ route('formTambah.projek') }}" class="btn btn-sm  my-0 rounded-3 primary-white">
                             Tambah Data
                         </a>
                         {{-- <h5 class="card-title mb-0">List Projek</h5> --}}
@@ -62,7 +62,7 @@ use Illuminate\Support\Carbon;
                                 <td class="d-none d-md-table-cell">William Harris</td>
                             </tr> --}}
 
-                            @foreach ($projek as $i => $data)
+                            @forelse ($projek as $i => $data)
 
                             @php
                             $tanggal = Carbon::parse($data['tanggal_projek'])->locale('id')->translatedFormat('d F Y');
@@ -92,7 +92,8 @@ use Illuminate\Support\Carbon;
                                 <td class="align-middle">{{ $kadaluwarsaStr }} <span class=" badge {{ $sisaWaktu == "Expired" ? "bg-danger" : "bg-success" }} ">{{ $sisaWaktu }}</span> </td>
                                 <td class="">
                                     <div class="d-flex justify-content-end">
-                                        <form class="d-inline-block mx-1" action="{{ route('detail.projek', ['id' => $data['id']]) }}" method="get">
+                                        {{-- detail --}}
+                                        <form class="d-inline-block mx-1" action="{{ route('detail.projek', ['id' => $data['id'], 'sisaWaktu' => $sisaWaktu]) }}" method="get">
                                             <button class="mb-1 btn btn-sm btn-info btn-detail">Detail</button>
                                         </form>
 
@@ -110,8 +111,13 @@ use Illuminate\Support\Carbon;
                                     </div>
                                 </td>
                             </tr>
-
-                            @endforeach
+                            @empty
+                            <table>
+                                <tr class="text-center">
+                                    <th class="py-4 text-danger" >Data Masih Kosong</th>
+                                </tr>
+                            </table>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

@@ -6,20 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WebGIS PUPR | @yield('title') </title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="/bootstrap5/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="/asset_admin_dashboard/css/app.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/Banjarmasin_Logo.png" type="image/x-icon">
     {{-- @vite('resources/css/app.css') --}}
     @yield('leafletJS')
     @yield('loadCSS')
+    <style>
+        .primary-white{
+            background-color:rgb(48, 48, 114);
+            color: white;
+        }
+
+        .primary-white:hover{
+            background-color:rgba(48, 48, 114, 0.712);
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="{{ route('admin.gis') }}">
-                    <span class="align-middle">Dashboard</span>
+                    <span class="align-middle">WebGIS PUPR</span>
                 </a>
 
                 <ul class="sidebar-nav">
@@ -241,7 +253,7 @@
 
         @include('sweetalert2::index')
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+        <script src="/bootstrap5/js/bootstrap.bundle.min.js"></script>
         @yield('loadJS')
 
 </body>

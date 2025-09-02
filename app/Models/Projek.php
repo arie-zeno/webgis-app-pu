@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Dokumentasi;
 use Illuminate\Database\Eloquent\Model;
 
 class Projek extends Model
@@ -13,6 +14,11 @@ class Projek extends Model
         'kadaluwarsa_projek',
         'file_koordinat',
     ];
+
+    public function dokumentasi()
+    {
+        return $this->hasMany(Dokumentasi::class, 'projek_id');
+    }
 
        //    $table->string('nama_proyek');
         //     $table->dateTime('tanggal_proyek');

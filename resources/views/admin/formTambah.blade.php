@@ -2,58 +2,129 @@
 @section('title', 'Tambah Projek')
 @section('content')
 
-<main class="content">
-    <div class="container-fluid p-0">
+    <main class="content">
+        <div class="container-fluid p-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-3">Tambah Projek</h1>
+                <a class="btn btn-sm btn-primary rounded" href="{{ route('admin.projek') }}">Kembali</a>
+            </div>
 
-        <div class="d-flex justify-content-between align-items-center">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    {{-- Form utama hanya sampai sini --}}
+                                    <form action="{{ route('tambah.projek') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="nama_projek" class="form-label">Nama Proyek</label>
+                                            <input type="text" required class="form-control" name="nama_projek">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email_projek" class="form-label">Email Proyek</label>
+                                            <input type="email" required class="form-control" name="email_projek">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tanggal_mulai" class="form-label">Tanggal Berlaku</label>
+                                            <input type="date" required class="form-control" name="tanggal_mulai">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="tanggal_akhir" class="form-label">Tanggal Berakhir</label>
+                                            <input type="date" required class="form-control" name="tanggal_akhir">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="file_koordinat" class="form-label">Koordinat Proyek</label>
+                                            <input type="file" required class="form-control" name="file_koordinat">
+                                        </div>
+                                </div>
 
-            <h1 class="h3 mb-3">Tambah Projek</h1>
-            <a class="btn btn-sm btn-primary rounded" href="{{ route('admin.projek') }}">Kembali</a>
-        </div>
+                                <div class="col-6 border-start">
+                                    <div id="dokumentasi-wrapper">
+                                        <div class="dokumentasi-item mb-3">
+                                            <label for="dokumentasi-0" class="form-label">Dokumentasi 1</label>
+                                            <input id="dokumentasi-0" type="file" name="gambars[]" class="form-control mb-2"
+                                                onchange="previewImage(this, 0)" required>
+                                            <div id="preview-0" class="mb-2"></div>
+                                            <input type="text" name="caption[]" class="form-control"
+                                                placeholder="Keterangan" required>
+                                        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Form Tambah Data</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('tambah.projek') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
+                                        <div class="dokumentasi-item mb-3">
+                                            <label for="dokumentasi-1" class="form-label">Dokumentasi 2</label>
+                                            <input id="dokumentasi-1" type="file" name="gambars[]" class="form-control mb-2"
+                                                onchange="previewImage(this, 1)">
+                                            <div id="preview-1" class="mb-2"></div>
+                                            <input type="text" name="caption[]" class="form-control"
+                                                placeholder="Keterangan" >
+                                        </div>
 
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama Proyek</label>
-                                <input type="text" required class="form-control" name="nama_projek">
+                                        <div class="dokumentasi-item mb-3">
+                                            <label for="dokumentasi-2" class="form-label">Dokumentasi 3</label>
+                                            <input id="dokumentasi-2" type="file" name="gambars[]" class="form-control mb-2"
+                                                onchange="previewImage(this, 2)">
+                                            <div id="preview-2" class="mb-2"></div>
+                                            <input type="text" name="caption[]" class="form-control"
+                                                placeholder="Keterangan" >
+                                        </div>
+
+
+                                    
+                                    </div>
+                                    {{-- <button type="button" class="btn btn-sm btn-outline-secondary w-100"
+                                        onclick="addDokumentasi()">+ Tambah Dokumentasi</button> --}}
+                                    <br><br>
+                                    <button type="submit" class="btn text-white w-100"
+                                        style="background-color:rgb(48, 48, 114);">Tambah Data</button>
+                                    </form>
+                                </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Email Proyek</label>
-                                <input type="email" required class="form-control" name="email_projek">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Tanggal Berlaku</label>
-                                <input type="date" required class="form-control" name="tanggal_mulai">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Tanggal Berakhir</label>
-                                <input type="date" required class="form-control" name="tanggal_akhir">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Koordinat Proyek</label>
-                                <input type="file" required class="form-control" id="name" name="file_koordinat">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Tambah Data</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </main>
 
-    </div>
-</main>
+    <script>
+        let index = 2;
+
+        function addDokumentasi() {
+            let wrapper = document.getElementById('dokumentasi-wrapper');
+            let item = document.createElement('div');
+            item.classList.add('dokumentasi-item', 'mb-3');
+            item.innerHTML = `
+            <label for="dokumentasi-${index}" class="form-label">Dokumentasi ${index}</label>
+
+            <input type="file" name="gambars[]" class="form-control mb-2" onchange="previewImage(this, ${index})" required>
+
+            <div id="preview-${index}" class="mb-2"></div>
+            <input type="text" name="caption[]" class="form-control" placeholder="Caption..." required>
+            <button type="button" class="btn btn-sm btn-outline-danger rounded mt-2" onclick="this.parentElement.remove()">Hapus</button>
+        `;
+            wrapper.appendChild(item);
+            index++;
+        }
+
+        // fungsi untuk preview gambar
+        function previewImage(input, idx) {
+            const previewContainer = document.getElementById(`preview-${idx}`);
+            previewContainer.innerHTML = ""; // reset dulu
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.style.maxWidth = "200px";
+                    img.style.maxHeight = "150px";
+                    img.classList.add("img-thumbnail");
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 @endsection
