@@ -300,7 +300,7 @@
             <h1 class="h3 mb-3"><strong>Analitik</strong> Dashboard</h1>
 
             <div class="row">
-                <div class="col-xl-6 col-xxl-5 d-flex">
+                <div class="col-xl-4 col-xxl-4 d-flex">
                     <div class="w-100">
                         <div class="row">
                             <div class="col-sm-12">
@@ -378,7 +378,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-6 col-xxl-7">
+                <div class="col-xl-8 col-xxl-8">
                     <div class="card flex-fill w-100">
                         <div class="card-header">
 
