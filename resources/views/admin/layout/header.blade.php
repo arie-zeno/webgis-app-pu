@@ -36,6 +36,12 @@
 
                 <ul class="sidebar-nav">
 
+                    <li class="sidebar-item {{ $title == 'Dashboard' ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
+                            <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-item {{ $title == 'Map' ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.gis') }}">
                             <i class="align-middle" data-feather="map"></i> <span class="align-middle">Pemetaan</span>
@@ -44,7 +50,7 @@
 
                     <li class="sidebar-item {{ $title == 'Projek' ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.projek') }}">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Projek</span>
+                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Projek</span>
                         </a>
                     </li>
     
@@ -224,8 +230,8 @@
                 <div class="container-fluid">
                     <div class="row text-muted">
                         <div class="col-6 text-start">
-                            <p class="mb-0">
-                                <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>PUPR Banjarmasin</strong></a> <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong></strong></a> &copy2025
+                            <p class="mb-0" style="color: rgb(48, 48, 114)">
+                                <a style="color: rgb(48, 48, 114)" class="" href="#" target="_blank"><strong>PUPR Banjarmasin</strong></a> <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong></strong></a> &copy2025
                             </p>
                         </div>
                         <div class="col-6 text-end">

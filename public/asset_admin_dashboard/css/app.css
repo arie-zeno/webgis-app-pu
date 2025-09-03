@@ -12099,7 +12099,7 @@ body {
 }
 .sidebar,
 .sidebar-content {
-    background: #2c3e50;
+    background: white;
     transition: margin-left 0.35s ease-in-out, left 0.35s ease-in-out,
         margin-right 0.35s ease-in-out, right 0.35s ease-in-out;
 }
@@ -12116,46 +12116,58 @@ body {
 }
 .sidebar-link,
 a.sidebar-link {
-    background: #2c3e50;
+    /* background: rgb(48, 48, 114); */
     border-left: 3px solid transparent;
-    color: rgba(233, 236, 239, 0.5);
+    color: #6c7383;
     cursor: pointer;
     display: block;
     font-weight: 400;
     padding: 0.625rem 1.625rem;
     position: relative;
     text-decoration: none;
-    transition: background 0.1s ease-in-out;
+    transition: background 0.2s ease-in-out;
+    margin: 5px 0;
 }
 .sidebar-link i,
 .sidebar-link svg,
 a.sidebar-link i,
 a.sidebar-link svg {
-    color: rgba(233, 236, 239, 0.5);
+    color: #6c7383;
     margin-right: 0.75rem;
 }
 .sidebar-link:focus {
     outline: 0;
 }
 .sidebar-link:hover {
-    background: #2c3e50;
-    border-left-color: transparent;
+    font-weight: bold;
+    background: linear-gradient(
+        90deg,
+        rgba(48, 48, 114, 1),
+        rgba(48, 48, 114, 0.2) 90%,
+        transparent
+    );
+    border-left-color: white;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
 }
 .sidebar-link:hover,
 .sidebar-link:hover i,
 .sidebar-link:hover svg {
-    color: rgba(233, 236, 239, 0.75);
+    color: white;
 }
 .sidebar-item.active .sidebar-link:hover,
 .sidebar-item.active > .sidebar-link {
     background: linear-gradient(
         90deg,
-        rgba(59, 125, 221, 0.1),
-        rgba(59, 125, 221, 0.088) 50%,
+        rgba(48, 48, 114, 1),
+        rgba(48, 48, 114, 0.2) 90%,
         transparent
     );
-    border-left-color: #3b7ddd;
-    color: #e9ecef;
+    border-left-color: white;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    color: white;
+    font-weight: bold;
 }
 .sidebar-item.active .sidebar-link:hover i,
 .sidebar-item.active .sidebar-link:hover svg,
@@ -12164,14 +12176,14 @@ a.sidebar-link svg {
     color: #e9ecef;
 }
 .sidebar-brand {
-    color: #f8f9fa;
+    color: rgb(48, 48, 114);
     display: block;
     font-size: 1.15rem;
     font-weight: 600;
     padding: 1.15rem 1.5rem;
 }
 .sidebar-brand:hover {
-    color: #f8f9fa;
+    color: rgba(48, 48, 114, 0.5);
     text-decoration: none;
 }
 .sidebar-brand:focus {

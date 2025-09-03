@@ -27,7 +27,7 @@ use Illuminate\Support\Carbon;
     </div> --}}
         {{-- table --}}
         <div class="row">
-            <div class="col-12 d-flex">
+            <div class="col-12 d-flex ">
                 <div class="card flex-fill">
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="card-title mb-0">List Projek</h5>
@@ -94,7 +94,7 @@ use Illuminate\Support\Carbon;
                                     <div class="d-flex justify-content-end">
                                         {{-- detail --}}
                                         <form class="d-inline-block mx-1" action="{{ route('detail.projek', ['id' => $data['id'], 'sisaWaktu' => $sisaWaktu]) }}" method="get">
-                                            <button class="mb-1 btn btn-sm btn-info btn-detail">Detail</button>
+                                            <button class="mb-1 btn btn-sm btn-outline-info btn-detail rounded">Detail</button>
                                         </form>
 
                                         {{-- kirim email --}}
@@ -103,10 +103,10 @@ use Illuminate\Support\Carbon;
                                             <input type="hidden" name="id" value="{{ $data['id'] }}">
                                             <input type="hidden" name="tanggal_akhir" value="{{ $kadaluwarsaStr}}">
                                             <input type="hidden" name="sisa_waktu" value="{{ $sisaWaktu}}">
-                                            <button type="submit" class="mb-1 btn btn-sm btn-warning send-email">Email</button>
+                                            <button type="submit" class="mb-1 btn btn-sm btn-outline-warning send-em roundedail">Email</button>
                                         </form>
 
-                                        <form class="d-inline-block mx-1" action="{{ route('hapus.projek', ['id' => $data['id']]) }}" method="get"> <button class="mb-1 btn btn-sm btn-danger">Hapus</button> </form>
+                                        <form class="d-inline-block mx-1" action="{{ route('hapus.projek', ['id' => $data['id']]) }}" method="get"> <button class="mb-1 btn btn-sm btn-outline-danger">Hapus</ roundedbutton> </form>
 
                                     </div>
                                 </td>

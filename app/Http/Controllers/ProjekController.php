@@ -14,7 +14,40 @@ class ProjekController extends Controller
 {
     public function dashboard(){
         $title = "Dashboard";
-        return view('admin.index', compact('title'));
+        $semuaProjek = Projek::all();
+        $projekPerTahun = [];
+
+        // Loop dari tahun 2013 sampai 2025
+        for ($tahun = 2013; $tahun <= 2025; $tahun++) {
+            // Filter koleksi data untuk mendapatkan projek pada tahun tersebut
+            $dataTahunIni = $semuaProjek->filter(function ($projek) use ($tahun) {
+                return Carbon::parse($projek->tanggal_projek)->year === $tahun;
+            })->values(); // Gunakan values() untuk mereset key array
+
+            // Simpan data ke dalam array dengan key tahun
+            $projekPerTahun[$tahun] = $dataTahunIni;
+        }
+
+        $persenAktif = 0;
+        $persenKadaluwarsa = 0;
+        // Mengambil jumlah keseluruhan data
+        $jumlahProjek = Projek::count();
+
+        
+        // Mengambil data aktif (tanggal_projek tidak kurang dari hari ini)
+        // Gunakan Carbon untuk tanggal hari ini
+        $hariIni = Carbon::today();
+        $projekAktif = Projek::where('kadaluwarsa_projek', '>=', $hariIni)->count();
+        
+        // Mengambil data kadaluwarsa (kadaluwarsa_projek sudah lewat)
+        $projekKadaluwarsa = Projek::where('kadaluwarsa_projek', '<', $hariIni)->count();
+        
+        if ($jumlahProjek > 0) {
+            $persenAktif = ($projekAktif / $jumlahProjek) * 100;
+            $persenKadaluwarsa = ($projekKadaluwarsa / $jumlahProjek) * 100;
+        }
+
+        return view('admin.index', compact('title', 'jumlahProjek', 'projekAktif', 'projekKadaluwarsa', 'persenAktif', 'persenKadaluwarsa', 'projekPerTahun'));
     }
     public function index(Request $request ){
 
