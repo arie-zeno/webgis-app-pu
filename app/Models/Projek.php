@@ -13,6 +13,9 @@ class Projek extends Model
         'tanggal_projek',
         'kadaluwarsa_projek',
         'file_koordinat',
+        'nama_jalur',
+        'line',
+        'markers',
     ];
 
     public function dokumentasi()

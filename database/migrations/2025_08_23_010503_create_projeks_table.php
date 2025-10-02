@@ -17,7 +17,10 @@ return new class extends Migration
             $table->string('email');
             $table->date('tanggal_projek');
             $table->date('kadaluwarsa_projek');
-            $table->string('file_koordinat');
+            $table->string('file_koordinat')->nullable();
+            $table->string('nama_jalur')->nullable();
+            $table->json('line')->nullable();
+            $table->json('markers')->nullable();
             $table->timestamps();
         });
     }

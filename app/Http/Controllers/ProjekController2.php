@@ -3,52 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projek;
-use App\Models\Dokumentasi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use SweetAlert2\Laravel\Swal;
-use Illuminate\Support\Carbon;
-use App\Mail\ProjectReminderMail;
-use Illuminate\Support\Facades\Mail;
 
-class ProjekController extends Controller
+class ProjekController2 extends Controller
 {
-    public function dashboard(){
-        $title = "Dashboard";
-        $semuaProjek = Projek::all();
-        $projekPerTahun = [];
-
-        // Loop dari tahun 2013 sampai 2025
-        for ($tahun = 2013; $tahun <= 2025; $tahun++) {
-            // Filter koleksi data untuk mendapatkan projek pada tahun tersebut
-            $dataTahunIni = $semuaProjek->filter(function ($projek) use ($tahun) {
-                return Carbon::parse($projek->tanggal_projek)->year === $tahun;
-            })->values(); // Gunakan values() untuk mereset key array
-
-            // Simpan data ke dalam array dengan key tahun
-            $projekPerTahun[$tahun] = $dataTahunIni;
-        }
-
-        $persenAktif = 0;
-        $persenKadaluwarsa = 0;
-        // Mengambil jumlah keseluruhan data
-        $jumlahProjek = Projek::count();
-
-        
-        // Mengambil data aktif (tanggal_projek tidak kurang dari hari ini)
-        // Gunakan Carbon untuk tanggal hari ini
-        $hariIni = Carbon::today();
-        $projekAktif = Projek::where('kadaluwarsa_projek', '>=', $hariIni)->count();
-        
-        // Mengambil data kadaluwarsa (kadaluwarsa_projek sudah lewat)
-        $projekKadaluwarsa = Projek::where('kadaluwarsa_projek', '<', $hariIni)->count();
-        
-        if ($jumlahProjek > 0) {
-            $persenAktif = ($projekAktif / $jumlahProjek) * 100;
-            $persenKadaluwarsa = ($projekKadaluwarsa / $jumlahProjek) * 100;
-        }
-
-        return view('admin.index', compact('title', 'jumlahProjek', 'projekAktif', 'projekKadaluwarsa', 'persenAktif', 'persenKadaluwarsa', 'projekPerTahun'));
-    }
     public function index(Request $request ){
 
         $title = "Projek";
@@ -78,16 +39,19 @@ class ProjekController extends Controller
 
         $projek->appends($request->all());
 
-        return view('admin.projek', compact('title','projek', 'sortBy', 'order', 'search'));
+        return view('admin.projek2', compact('title','projek', 'sortBy', 'order', 'search'));
     }
 
     public function formTambahProjek(){
         $title = "Projek";
-        return view('admin.formTambah', compact('title'));
+        return view('admin.formTambah2', compact('title'));
     }
 
     public function tambahProjek(Request $request){
         // $data = $request->caption;
+        // $line = json_decode($request->line, true);       // array koordinat polyline
+        // $markers = json_decode($request->markers, true);
+        // dd([$line, $markers]);
         
 
         try{
@@ -99,7 +63,7 @@ class ProjekController extends Controller
                 "email_projek" => "required",
                 "tanggal_mulai" => "required",
                 "tanggal_akhir" => "required",                
-                "file_koordinat" => "nullable|file",
+                // "file_koordinat" => "nullable|file",
             ]);
 
             if ($request->hasFile('file_koordinat')) {
@@ -128,13 +92,27 @@ class ProjekController extends Controller
 
             $tanggal_akhir = Carbon::parse($request->tanggal_mulai)->copy()->addYears(5);
             // return $tanggal_akhir;
-            $projek = Projek::create([
-                'nama_projek' => $request->nama_projek,
-                'email' => $request->email_projek,
-                'tanggal_projek' => $request->tanggal_mulai,
-                'kadaluwarsa_projek' => $request->tanggal_akhir,
-                'file_koordinat' => $filePath,
-            ]);
+            if($request->hasFile('file_koordinat')){
+                $projek = Projek::create([
+                    'nama_projek' => $request->nama_projek,
+                    'email' => $request->email_projek,
+                    'tanggal_projek' => $request->tanggal_mulai,
+                    'kadaluwarsa_projek' => $request->tanggal_akhir,
+                    'file_koordinat' => $filePath,
+                ]);
+            }else{
+
+                $projek = Projek::create([
+                    'nama_projek' => $request->nama_projek,
+                    'email' => $request->email_projek,
+                    'tanggal_projek' => $request->tanggal_mulai,
+                    'kadaluwarsa_projek' => $request->tanggal_akhir,
+                    'file_koordinat' => null,
+                    'nama_jalur' => $request->nama_jalur,
+                    'line' => $request->line,         // langsung simpan JSON string
+                    'markers' => $request->markers,
+                ]);
+            }
 
             if ($request->hasFile('gambars')) {
                 foreach ($request->file('gambars') as $index => $file) {
@@ -181,50 +159,6 @@ class ProjekController extends Controller
     public function detailProjek($id){
         $title = "Projek";
         $data = Projek::findOrFail($id);
-        return view('admin.detail', compact('data', 'title'));
-    }
-
-    public function hapusProjek($id){
-        Projek::destroy($id);
-        Swal::error([
-            'title' => 'Data berhasil dihapus.',
-        ]);
-
-         Swal::fire([
-                'title' => 'Berhasil',
-                'text' => 'Data berhasil dihapus.',
-                'icon' => 'error',
-                'timer' => 2000,
-                'confirmButtonText' => 'Tutup'
-        ]);
-        
-        // Alert::error('Berhasil!', 'Data berhasil dihapus.');
-        return redirect()->route('admin.projek');
-    }
-
-    // kirim email
-    public function sendMail(Request $request){
-        $data = Projek::findOrFail($request->id);
-        // dd($data->nama_projek);
-
-        $pesan = "Haloo selamat siang " . $data->email . ", projek " . $data->nama_projek . " berakhir pada " . $request->tanggal_akhir . " (". $request->sisa_waktu . ")";
-
-        Mail::to($data->email)->send(new ProjectReminderMail($pesan));
-        Swal::fire([
-                'title' => 'Berhasil',
-                'text' => 'Email berhasil dikirim ke ' . $data->email ,
-                'icon' => 'info',
-                'timer' => 2000,
-                'confirmButtonText' => 'Tutup'
-        ]);
-
-        return redirect()->route('admin.projek');
-    }
-
-    // GIS
-    public function gis(){
-        $title = "Map";
-        $data = Projek::all();
-        return view('admin.gis', compact('data', 'title'));
+        return view('admin.detail2', compact('data', 'title'));
     }
 }

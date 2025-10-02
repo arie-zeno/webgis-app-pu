@@ -53,6 +53,12 @@
                             <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Projek</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item {{ $title == 'Projek' ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('admin2.projek') }}">
+                            <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Projek V2</span>
+                        </a>
+                    </li>
     
                 </ul>
 
